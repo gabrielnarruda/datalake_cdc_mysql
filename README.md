@@ -2,6 +2,7 @@
 
 Requirements:
 Python 3.8+
+
 ## Introdução
 Através da técnica Change Data Capture é possível trafegar e replicar informações oriundas de bancos de dados em tempo real.
 Utilizando um canal de comunicação aberto permanentemente, o banco de dados é capaz de disparar Logs de eventos ocorridos 
@@ -48,3 +49,14 @@ a performance das queries.
 
 Caso seja necessário adicionar mais Schemas para serem gerenciados pela aplicação, é possivel realizar o processamento
 em processamentos paralelos através de Threads.
+
+## Pontos Importantes
+Foram achados dados Homonimos de cidades no dataset de geolocation. Considerando que é uma base de dados incremental,
+a fonte de dados deveria, na melhor das opções, ser normalizada na entrada para evitar problemas dos dados 
+no datalake. Devido a estratégia utilizada é inviável tratar tais situações no momento do tráfego do dado. Entretanto, 
+outras estratégias podem ser utilizadas em conjunto para o tratamento dos dados. Pode-se utilizar da tecnica Levenstein
+para normalização de strings homonimas. Tal tecnica pode ser utilizada antes que o dado chegue no datalake com a implementação de
+um middleware que trate dessas transformações pontuais. Este middleware pode ser uma API rest triggada por um adapter
+que consuma mensagens publicadas por esta aplicação em um tópico/fila. Pode-se também aplicar rotinas de normalização
+através dos chamados CronJobs.
+

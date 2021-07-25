@@ -1,0 +1,26 @@
+#geolocation>customers>Orders>payments
+
+CREATE VIEW db_gw.vw_geolocation_customers_orders_payments
+AS
+  SELECT og.geolocation_lat,
+         og.geolocation_lng,
+         oc.customer_id,
+         oc.customer_city,
+         oc.customer_state,
+         oo.order_status,
+         oo.order_purchase_timestamp,
+         oo.order_approved_at,
+         oo.order_estimated_delivery_date,
+         oo.order_delivered_carrier_date,
+         oo.order_delivered_customer_date,
+         oop.payment_type,
+         oop.payment_value,
+         oop.payment_sequential,
+         oop.payment_installments
+  FROM   olist_geolocation og
+         LEFT JOIN olist_customers oc
+                ON oc.customer_zip_code_prefix = og.geolocation_zip_code_prefix
+         LEFT JOIN olist_orders oo
+                ON oc.customer_id = oo.customer_id
+         LEFT JOIN olist_order_payments oop
+                ON oop.order_id = oo.order_id
