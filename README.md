@@ -45,3 +45,6 @@ As tabelas fato foram resolvidas no lado do banco de dados através de Views adv
 A depender do volume das tabelas dimensão e pensando na performance das consultas dos analistas de dados que irão consumir
 informações dessas tabelas, é possível adicionar Index às tabela e, também, criar-se Materialized Views, otimizando assim
 a performance das queries.
+
+Caso seja necessário adicionar mais Schemas para serem gerenciados pela aplicação, é possivel realizar o processamento
+em processamentos paralelos através de Threads.
