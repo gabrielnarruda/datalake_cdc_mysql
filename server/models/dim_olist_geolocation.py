@@ -40,3 +40,11 @@ class DimOlistGeolocation(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.geolocation_zip_code_prefix = event.get('geolocation_zip_code_prefix')
+        self.geolocation_lat = event.get('geolocation_lat')
+        self.geolocation_lng = event.get('geolocation_lng')
+        self.geolocation_city = event.get('geolocation_city')
+        self.geolocation_state = event.get('geolocation_state')
+        self.freight_value = event.get('freight_value')

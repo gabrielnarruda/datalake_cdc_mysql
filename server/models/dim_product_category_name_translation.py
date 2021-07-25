@@ -30,3 +30,7 @@ class DimProductCategoryNameTranslation(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.product_category_name = event.get('product_category_name')
+        self.product_category_name_english = event.get('product_category_name_english')

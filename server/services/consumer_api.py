@@ -12,6 +12,7 @@ class Consumer(DimensionTables):
 
     def __init__(self, stream):
         self.stream = stream
+        DimensionTables.__init__(self)
 
     def consume_stream(self):
         for binlogevent in self.stream:
@@ -32,6 +33,6 @@ class Consumer(DimensionTables):
         elif isinstance(binlogevent, WriteRowsEvent):
             event["action"] = "insert"
             event.update({'values': [row["values"]]})
-        print(json.dumps(event))
+        # print(json.dumps(event))
         sys.stdout.flush()
         return event

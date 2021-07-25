@@ -8,7 +8,7 @@ DB_PASS = os.getenv("DB_PASS")
 DB_HOST = os.getenv("DB_HOST")
 DB_NAME = os.getenv("DB_NAME")
 DB_PORT = int(os.getenv("DB_PORT"))
-DB_CONN=os.getenv("DB_CONN")
+DB_CONN = os.getenv("DB_CONN")
 
 LOG_LEVEL = int(os.getenv("LOG_LEVEL", 10))
 NOME_PROJETO_LOGGER = os.getenv("NOME_PROJETO_LOGGER")

@@ -42,3 +42,14 @@ class DimOlistProducts(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.product_id = event.get('product_id')
+        self.product_category_name = event.get('product_category_name')
+        self.product_name_lenght = event.get('product_name_lenght')
+        self.product_description_lenght = event.get('product_description_lenght')
+        self.product_photos_qty = event.get('product_photos_qty')
+        self.product_weight_g = event.get('product_weight_g')
+        self.product_length_cm = event.get('product_length_cm')
+        self.product_height_cm = event.get('product_height_cm')
+        self.product_width_cm = event.get('product_width_cm')

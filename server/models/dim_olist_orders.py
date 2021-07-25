@@ -42,3 +42,13 @@ class DimOlistOrders(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.order_id = event.get('order_id')
+        self.customer_id = event.get('customer_id')
+        self.order_status = event.get('order_status')
+        self.order_purchase_timestamp = event.get('order_purchase_timestamp')
+        self.order_approved_at = event.get('order_approved_at')
+        self.order_delivered_carrier_date = event.get('order_delivered_carrier_date')
+        self.order_delivered_customer_date = event.get('order_delivered_customer_date')
+        self.order_estimated_delivery_date = event.get('order_estimated_delivery_date')

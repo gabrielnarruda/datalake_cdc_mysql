@@ -36,3 +36,10 @@ class DimOlistCustomers(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.customer_id = event.get('customer_id')
+        self.customer_unique_id = event.get('customer_unique_id')
+        self.customer_zip_code_prefix = event.get('customer_zip_code_prefix')
+        self.customer_city = event.get('customer_city')
+        self.customer_state = event.get('customer_state')

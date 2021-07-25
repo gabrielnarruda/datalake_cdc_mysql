@@ -41,3 +41,12 @@ class DimOlistOrderReviews(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.review_id = event.get('review_id')
+        self.order_id = event.get('order_id')
+        self.review_score = event.get('review_score')
+        self.review_comment_title = event.get('review_comment_title')
+        self.review_comment_message = event.get('review_comment_message')
+        self.review_creation_date = event.get('review_creation_date')
+        self.review_answer_timestamp = event.get('review_answer_timestamp')

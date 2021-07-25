@@ -24,4 +24,8 @@ class DimensionTables():
         }
 
     def populate_dimension_tables(self, event):
-        pass
+        table = event['table']
+        table_orm = self.dimension_tables_mapping.get(table)
+        table_obj = table_orm()
+        event_values = event['values'][0]
+        table_obj.fill_orm_with_event(event_values)

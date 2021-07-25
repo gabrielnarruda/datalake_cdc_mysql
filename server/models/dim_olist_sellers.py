@@ -22,7 +22,6 @@ class DimOlistSellers(Base):
     created_by = Column(String)
     updated_by = Column(String)
 
-
     def to_dict(self):
         return {
             "id": str(self.id),
@@ -35,3 +34,9 @@ class DimOlistSellers(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.seller_id = event.get('seller_id')
+        self.seller_state = event.get('seller_state')
+        self.seller_city = event.get('seller_city')
+        self.seller_zip_code_prefix = event.get('seller_zip_code_prefix')

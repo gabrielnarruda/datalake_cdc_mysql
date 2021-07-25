@@ -33,3 +33,10 @@ class DimOlistOrderPayments(Base):
             "created_by": str(self.created_by),
             "updated_by": str(self.updated_by),
         }
+
+    def fill_orm_with_event(self, event):
+        self.order_id = event.get('order_id')
+        self.payment_sequential = event.get('payment_sequential')
+        self.payment_type = event.get('payment_type')
+        self.payment_installments = event.get('payment_installments')
+        self.payment_value = event.get('payment_value')
