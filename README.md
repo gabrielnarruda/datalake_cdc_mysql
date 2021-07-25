@@ -1,4 +1,7 @@
 ## CDC MySQL 
+
+Requirements:
+Python 3.8+
 # Introdução
 Através da técnica Change Data Capture é possível trafegar e replicar informações oriundas de bancos de dados em tempo real.
 Utilizando um canal de comunicação aberto permanentemente, o banco de dados é capaz de disparar Logs de eventos ocorridos 
