@@ -1,4 +1,4 @@
-create table olist_customers(
+create table tb_dim_olist_customers(
 	id int primary key auto_increment,
     customer_id varchar(255),
     customer_unique_id int,

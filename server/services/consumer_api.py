@@ -29,7 +29,7 @@ class Consumer(DimensionTables):
             event.update({'values': [row["values"]]})
         elif isinstance(binlogevent, UpdateRowsEvent):
             event["action"] = "update"
-            event.update({'values': [row["values"]]})
+            event.update({'values': [row["after_values"]]})
         elif isinstance(binlogevent, WriteRowsEvent):
             event["action"] = "insert"
             event.update({'values': [row["values"]]})
