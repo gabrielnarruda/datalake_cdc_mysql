@@ -1,22 +1,35 @@
-## 2.0.1 - Ajuste de build pipline
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+## CDC MySQL 
+# Introdução
+Através da técnica Change Data Capture é possível trafegar e replicar informações oriundas de bancos de dados em tempo real.
+Utilizando um canal de comunicação aberto permanentemente, o banco de dados é capaz de disparar Logs de eventos ocorridos 
+que podem ser tracionados de acordo com a necessidade da ocasião, seja replicar o dado em outra base, seja para construir
+um datalake, por exemplo.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# Lógica de funcionamento
+O canal banco de dados->Aplicação é mantido aberto permanentemente através de um loop do tipo While True, dessa forma,
+enquanto a aplicação estiver de pé esta é capaz de consumir a stream de dados publicada pelo banco.
+A lógica principal é iniciada através do arquivo __main__ e sua arquitetura lógica está contida na pasta 'services'
 
+# A estruturação de tabelas
+Para cada transação realizada no banco, a aplicação recebe um Log do evento e o reestrutura  baseado em um mapa de tabelas 
+com uma relação DE-PARA. Ou seja, para cada tabela de um Schema supervisionado pela aplicação existe um objeto ORM
+reponsável por traduzir e dirir para nova base de dados.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Foi utilizado a bibliotera ORM SQLAlchemy
+Os modelos estão descritos na pasta 'models'
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+# Logs e Erros CornerCase
+A aplicação também conta com um (pseudo)sistema de logs dirigido para um servidor Elasticsearch, reponsável por armazenar
+as informações de execução da aplicação.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+A aplicação foi estruturada para ser capaz de (pseudo)enviar notificações para canais de suporte específicos caso aconteça
+algum erro oriundo de algum CornerCase não amparado pela lógica inicial estabelecida em seu desenvolvimento. Dessa forma
+a equipe de suporte/RunTheBusiness/Desenvolvedor responsável pode atuar mais rapidamente na manutenção e evolução do código,
+diminuindo o agrave de problemas.
+
+# Deployment
+A aplicação foi construida com o intuito de ser encapsulada em um container Docker, dessa forma, pode ser gerenciada por
+servidores Kubernetes e afins. as configurações estão no arquivo Dockerfile.
+
+As dependencias necessárias estão no arquivo requirements.txt
+Para instalá-las, execute o comando pip instal -r requirements.txt
