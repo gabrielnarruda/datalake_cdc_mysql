@@ -38,3 +38,15 @@ class DimProductCategoryNameTranslation(Base):
     def fill_orm_with_event(self, event):
         self.product_category_name = event.get('product_category_name')
         self.product_category_name_english = event.get('product_category_name_english')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimProductCategoryNameTranslation.product_category_name == event.get('product_category_name'))
+        filter_list.append(DimProductCategoryNameTranslation.product_category_name_english == event.get('product_category_name_english'))
+        return filter_list

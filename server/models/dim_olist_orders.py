@@ -56,3 +56,21 @@ class DimOlistOrders(Base):
         self.order_delivered_carrier_date = event.get('order_delivered_carrier_date')
         self.order_delivered_customer_date = event.get('order_delivered_customer_date')
         self.order_estimated_delivery_date = event.get('order_estimated_delivery_date')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimOlistOrders.order_id == event.get('order_id'))
+        filter_list.append(DimOlistOrders.customer_id == event.get('customer_id'))
+        filter_list.append(DimOlistOrders.order_status == event.get('order_status'))
+        filter_list.append(DimOlistOrders.order_purchase_timestamp == event.get('order_purchase_timestamp'))
+        filter_list.append(DimOlistOrders.order_approved_at == event.get('order_approved_at'))
+        filter_list.append(DimOlistOrders.order_delivered_carrier_date == event.get('order_delivered_carrier_date'))
+        filter_list.append(DimOlistOrders.order_delivered_customer_date == event.get('order_delivered_customer_date'))
+        filter_list.append(DimOlistOrders.order_estimated_delivery_date == event.get('order_estimated_delivery_date'))
+        return filter_list

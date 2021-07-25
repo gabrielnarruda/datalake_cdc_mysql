@@ -44,3 +44,19 @@ class DimOlistOrderPayments(Base):
         self.payment_type = event.get('payment_type')
         self.payment_installments = event.get('payment_installments')
         self.payment_value = event.get('payment_value')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimOlistOrderPayments.order_id == event.get('order_id'))
+        filter_list.append(DimOlistOrderPayments.payment_sequential == event.get('payment_sequential'))
+        filter_list.append(DimOlistOrderPayments.payment_type == event.get('payment_type'))
+        filter_list.append(DimOlistOrderPayments.payment_installments == event.get('payment_installments'))
+        filter_list.append(DimOlistOrderPayments.product_category_name == event.get('payment_value'))
+
+        return filter_list

@@ -23,6 +23,10 @@ class DimOlistSellers(Base):
     updated_by = Column(String)
 
     def to_dict(self):
+        """
+        Código responsavel por retornar o objeto ORM em formato de dicionario. Pode ser utilizado para propagar a
+        mensagem para algum outro canal ou broadcast
+        """
         return {
             "id": str(self.id),
             "seller_id": str(self.seller_id),
@@ -40,3 +44,17 @@ class DimOlistSellers(Base):
         self.seller_state = event.get('seller_state')
         self.seller_city = event.get('seller_city')
         self.seller_zip_code_prefix = event.get('seller_zip_code_prefix')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimOlistSellers.seller_id == event.get('seller_id'))
+        # filter_list.append(DimOlistSellers.seller_state == event.get('seller_state'))
+        # filter_list.append(DimOlistSellers.seller_city == event.get('seller_city'))
+        # filter_list.append(DimOlistSellers.seller_zip_code_prefix == event.get('seller_zip_code_prefix'))
+        return filter_list

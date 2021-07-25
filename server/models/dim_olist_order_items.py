@@ -50,3 +50,19 @@ class DimOlistOrderItems(Base):
         self.seller_id = event.get('seller_id')
         self.price = event.get('price')
         self.freight_value = event.get('freight_value')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimOlistOrderItems.order_id == event.get('order_id'))
+        # filter_list.append(DimOlistOrderItems.order_item_id == event.get('order_item_id'))
+        # filter_list.append(DimOlistOrderItems.product_id == event.get('product_id'))
+        # filter_list.append(DimOlistOrderItems.seller_id == event.get('seller_id'))
+        # filter_list.append(DimOlistOrderItems.price == event.get('price'))
+        # filter_list.append(DimOlistOrderItems.freight_value == event.get('freight_value'))
+        return filter_list

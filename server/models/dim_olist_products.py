@@ -2,6 +2,7 @@ from server import Base
 from sqlalchemy import Column, DateTime, Date, Numeric, Integer, create_engine, Boolean, String, UniqueConstraint
 from datetime import datetime
 
+
 class DimOlistProducts(Base):
     """
     Classe ORM responsável pela interface da tabela dimensão tb_dim_olist_products
@@ -12,7 +13,7 @@ class DimOlistProducts(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     product_id = Column(String)
     product_category_name = Column(String)
-    product_name_lenght=Column(Numeric(precision=18, scale=8))
+    product_name_lenght = Column(Numeric(precision=18, scale=8))
     product_description_lenght = Column(Numeric(precision=18, scale=8))
     product_photos_qty = Column(Numeric(precision=18, scale=8))
     product_weight_g = Column(Numeric(precision=18, scale=8))
@@ -57,3 +58,23 @@ class DimOlistProducts(Base):
         self.product_length_cm = event.get('product_length_cm')
         self.product_height_cm = event.get('product_height_cm')
         self.product_width_cm = event.get('product_width_cm')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimOlistProducts.product_id == event.get('product_id'))
+        filter_list.append(DimOlistProducts.product_category_name == event.get('product_category_name'))
+        filter_list.append(DimOlistProducts.product_name_lenght == event.get('product_name_lenght'))
+        filter_list.append(DimOlistProducts.product_description_lenght == event.get('product_description_lenght'))
+        filter_list.append(DimOlistProducts.product_photos_qty == event.get('product_photos_qty'))
+        filter_list.append(DimOlistProducts.product_weight_g == event.get('product_weight_g'))
+        filter_list.append(DimOlistProducts.product_length_cm == event.get('product_length_cm'))
+        filter_list.append(DimOlistProducts.product_height_cm == event.get('product_height_cm'))
+        filter_list.append(DimOlistProducts.product_width_cm == event.get('product_width_cm'))
+
+        return filter_list

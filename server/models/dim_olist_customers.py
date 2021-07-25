@@ -47,3 +47,18 @@ class DimOlistCustomers(Base):
         self.customer_zip_code_prefix = event.get('customer_zip_code_prefix')
         self.customer_city = event.get('customer_city')
         self.customer_state = event.get('customer_state')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        # filter_list.append(DimOlistCustomers.customer_id == event.get('customer_id'))
+        filter_list.append(DimOlistCustomers.customer_unique_id == event.get('customer_unique_id'))
+        # filter_list.append(DimOlistCustomers.customer_zip_code_prefix == event.get('customer_zip_code_prefix'))
+        # filter_list.append(DimOlistCustomers.customer_city == event.get('customer_city'))
+        # filter_list.append(DimOlistCustomers.customer_state == event.get('customer_state'))
+        return filter_list

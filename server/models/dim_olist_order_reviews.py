@@ -54,3 +54,21 @@ class DimOlistOrderReviews(Base):
         self.review_comment_message = event.get('review_comment_message')
         self.review_creation_date = event.get('review_creation_date')
         self.review_answer_timestamp = event.get('review_answer_timestamp')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        filter_list.append(DimOlistOrderReviews.review_id == event.get('review_id'))
+        # filter_list.append(DimOlistOrderReviews.order_id == event.get('order_id'))
+        # filter_list.append(DimOlistOrderReviews.review_score == event.get('review_score'))
+        # filter_list.append(DimOlistOrderReviews.review_comment_title == event.get('review_comment_title'))
+        # filter_list.append(DimOlistOrderReviews.review_comment_message == event.get('review_comment_message'))
+        # filter_list.append(DimOlistOrderReviews.review_creation_date == event.get('review_creation_date'))
+        # filter_list.append(DimOlistOrderReviews.review_answer_timestamp == event.get('review_answer_timestamp'))
+
+        return filter_list

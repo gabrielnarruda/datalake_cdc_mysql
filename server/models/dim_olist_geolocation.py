@@ -52,3 +52,19 @@ class DimOlistGeolocation(Base):
         self.geolocation_city = event.get('geolocation_city')
         self.geolocation_state = event.get('geolocation_state')
         self.freight_value = event.get('freight_value')
+
+    def unique_filter(self, event):
+        """
+        Função destinada a filtrar registro da tabela dimensão para saber se é um registro novo ou já algum registro antigo
+        na tabela. Se todas os atributos forem adicionados ao filtro, a tabela passará ter todos os dados históricos de uma mesma PK.
+        Caso apenas a PK seja utilizada como filtro, exestirá apenas um registro para a mesma, que será sobrescrito a cada novo evento
+
+        """
+        filter_list = []
+        # filter_list.append(DimOlistGeolocation.geolocation_zip_code_prefix == event.get('geolocation_zip_code_prefix'))
+        filter_list.append(DimOlistGeolocation.geolocation_lat == event.get('geolocation_lat'))
+        filter_list.append(DimOlistGeolocation.geolocation_lng == event.get('geolocation_lng'))
+        # filter_list.append(DimOlistGeolocation.geolocation_city == event.get('geolocation_city'))
+        # filter_list.append(DimOlistGeolocation.geolocation_state == event.get('geolocation_state'))
+        # filter_list.append(DimOlistGeolocation.freight_value == event.get('freight_value'))
+        return filter_list
