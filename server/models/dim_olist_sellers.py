@@ -21,8 +21,7 @@ class DimOlistSellers(Base):
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     created_by = Column(String)
     updated_by = Column(String)
-    __table_args__ = (UniqueConstraint('tp_indice', 'dt_indice', name='tb_rates_curves_ukey'),
-                      )
+
 
     def to_dict(self):
         return {

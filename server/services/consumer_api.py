@@ -20,8 +20,7 @@ class Consumer(DimensionTables):
                          "table": binlogevent.table,
                          "timestamp": binlogevent.timestamp}
                 event = self.event_structor(event, binlogevent, row)
-                self.populate_dimension_tables
-
+                self.populate_dimension_tables(event)
 
     def event_structor(self, event, binlogevent, row):
         if isinstance(binlogevent, DeleteRowsEvent):

@@ -23,5 +23,5 @@ class DimensionTables():
             'olist_customers': DimOlistCustomers
         }
 
-    def populate_dimension_tables(self):
+    def populate_dimension_tables(self, event):
         pass

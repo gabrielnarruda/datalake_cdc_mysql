@@ -8,8 +8,7 @@ from server import Base
 class DimOlistGeolocation(Base):
     """
     Classe ORM responsável pela interface da tabela dimensão tb_dim_olist_geolocation
-    "geolocation_zip_code_prefix","geolocation_lat","geolocation_lng","geolocation_city","geolocation_state"
-"01037",-23.54562128115268,-46.63929204800168,sao paulo,SP
+
 
     """
     __tablename__ = "tb_dim_olist_geolocation"
