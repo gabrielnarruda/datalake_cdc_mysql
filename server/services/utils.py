@@ -9,4 +9,4 @@ def enviar_msg_para_canal_suporte(e):
     do time para que a demanda seja resolvida o mais rápido possivel.
 
     """
-    print('ERROR')
+    print(f'ERROR>>>{e}')

@@ -29,13 +29,19 @@ class DimensionTables():
         table_orm = self.dimension_tables_mapping.get(table)
         table_dto = table_orm()
         event_values = event['values'][0]
-        unique_filter = table_dto .unique_filter(event_values)
+        unique_filter = table_dto.unique_filter(event_values)
         query = session.query(table_orm).filter(*unique_filter)
-        query = query.first()
-        if query == None:
-            table_dto.fill_orm_with_event(event_values)
-            session.add(table_dto)
-        else:
-            query.fill_orm_with_event(event_values)
-            session.add(query)
+        self.handle_event_action(event_values, query, table_dto, event['action'])
+
+    def handle_event_action(self, event_values, query, table_dto, action):
+        db_dto = query.first()
+        if action in ('update', 'insert'):
+            if db_dto == None:
+                table_dto.fill_orm_with_event(event_values)
+                session.add(table_dto)
+            else:
+                db_dto.fill_orm_with_event(event_values)
+                session.add(db_dto)
+        if action == 'delete':
+            query.delete()
         session.commit()

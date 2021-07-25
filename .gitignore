@@ -1,3 +1,6 @@
 server/__pycache__/
 venv/
 .idea/
+server/configurations/__pycache__/
+server/models/__pycache__/
+server/services/__pycache__/

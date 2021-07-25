@@ -19,6 +19,7 @@ stream = BinLogStreamReader(
     connection_settings=mysql_settings,
     server_id=3,
     only_events=[DeleteRowsEvent, WriteRowsEvent, UpdateRowsEvent],
+    only_schemas=['datasets_outsource'],
     resume_stream=True)
 
 engine = create_engine(
