@@ -46,6 +46,9 @@ class DimOlistGeolocation(Base):
         }
 
     def fill_orm_with_event(self, event):
+        """
+        Função responsável por preencher o objeto ORM com as informações do evento desta classe
+        """
         self.geolocation_zip_code_prefix = event.get('geolocation_zip_code_prefix')
         self.geolocation_lat = event.get('geolocation_lat')
         self.geolocation_lng = event.get('geolocation_lng')

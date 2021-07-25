@@ -11,6 +11,10 @@ from server.models.dim_product_category_name_translation import DimProductCatego
 
 
 class DimensionTables():
+    """
+    Classe responsavel por mapear as tabelas dimensão que se desejam trafegar atratravés dos ReplicationLogs.
+
+    """
     def __init__(self):
         self.dimension_tables_mapping = {
             "product_category_name_translation": DimProductCategoryNameTranslation,
@@ -24,7 +28,12 @@ class DimensionTables():
             'olist_customers': DimOlistCustomers
         }
 
-    def populate_dimension_tables(self, event):
+    def handle_transactions_dimension_tables(self, event):
+        """
+        Função responsavel por gerenciar e endereçar os logs dos eventos Replication
+        ::params::
+        event: Evento Log disparado pelo banco de dados através do canal de Replication
+        """
         table = event['table']
         table_orm = self.dimension_tables_mapping.get(table)
         table_dto = table_orm()
@@ -34,6 +43,16 @@ class DimensionTables():
         self.handle_event_action(event_values, query, table_dto, event['action'])
 
     def handle_event_action(self, event_values, query, table_dto, action):
+        """
+        Função responsável por transacionar o evento de Log baseado no tipo de ação executada (UPDATE,INSERT,DELETE)
+        para a tabela dimensão alvo
+        ::params::
+        event_values: valores da transação do evento
+        query: Objeto ORM referente ao evento em questão
+        table_dto: Instancia ORM do tipo da tabela transacionada no evento
+        action: tipo da ação executada na transação
+
+        """
         db_dto = query.first()
         if action in ('update', 'insert'):
             if db_dto == None:

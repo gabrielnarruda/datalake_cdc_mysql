@@ -17,5 +17,7 @@ def main():
 
 
 if __name__ == "__main__":
+    # A Aplicação de modelo Runner consiste em um canal aberto permanentemente com o banco de dados para que os eventos
+    # possam ser trafegados em tempo real.
     while True:
         main()

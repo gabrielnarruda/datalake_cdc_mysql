@@ -40,6 +40,9 @@ class DimOlistSellers(Base):
         }
 
     def fill_orm_with_event(self, event):
+        """
+        Função responsável por preencher o objeto ORM com as informações do evento desta classe
+        """
         self.seller_id = event.get('seller_id')
         self.seller_state = event.get('seller_state')
         self.seller_city = event.get('seller_city')

@@ -39,6 +39,9 @@ class DimOlistOrderPayments(Base):
         }
 
     def fill_orm_with_event(self, event):
+        """
+        Função responsável por preencher o objeto ORM com as informações do evento desta classe
+        """
         self.order_id = event.get('order_id')
         self.payment_sequential = event.get('payment_sequential')
         self.payment_type = event.get('payment_type')

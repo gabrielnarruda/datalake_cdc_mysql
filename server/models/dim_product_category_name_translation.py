@@ -36,6 +36,9 @@ class DimProductCategoryNameTranslation(Base):
         }
 
     def fill_orm_with_event(self, event):
+        """
+        Função responsável por preencher o objeto ORM com as informações do evento desta classe
+        """
         self.product_category_name = event.get('product_category_name')
         self.product_category_name_english = event.get('product_category_name_english')
 
