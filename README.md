@@ -39,10 +39,13 @@ As dependencias necessárias estão no arquivo requirements.txt
 Para instalá-las, execute o comando pip instal -r requirements.txt
 
 # Tabelas Dimensão, Tabelas Fato, StarSchema
-Para a resolução do problema proposto, foi considerado que os datasets incrementais estariam em um banco de dados relacional MySQL.
+- Para a resolução do problema proposto, foi considerado que os datasets incrementais estariam em um banco de dados relacional MySQL.
 Cada uma das tabelas do foi considerada como uma tabela dimensão para a formação de um novo datalake, onde, a partir 
 dessas tabelas dimensão foi possível construir tabelas fato, originando assim um datalake no padrão StarSchema.
-As tabelas fato foram resolvidas no lado do banco de dados através de Views advindas dos relacionamentos das tabelas dimensão.
+- As informações das tabelas fato foram agregadas de forma ampla o suficiente para que o analista consiga sumarizar
+  os dados da forma que melhor lhe agrade. Vale ressaltar que as agregações podem variar de acordo com o direcionamento do viés da pesquisa.
+  Exemplos em imagem na raiz do projeto.
+- As tabelas fato foram resolvidas no lado do banco de dados através de Views advindas dos relacionamentos das tabelas dimensão.
 A depender do volume das tabelas dimensão e pensando na performance das consultas dos analistas de dados que irão consumir
 informações dessas tabelas, é possível adicionar Index às tabela e, também, criar-se Materialized Views, otimizando assim
 a performance das queries.

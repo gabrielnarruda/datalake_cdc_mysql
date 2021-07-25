@@ -1,0 +1,25 @@
+CREATE VIEW vw_geolocation_sellers_itens_products
+AS
+  SELECT og.geolocation_lat,
+         og.geolocation_lng,
+         tdos.seller_id,
+         tdos.seller_city,
+         tdos.seller_state,
+         tdooi.shipping_limit_date,
+         tdooi.price,
+         tdooi.freight_value,
+         tdop.product_category_name,
+         tdop.product_name_lenght,
+         tdop.product_description_lenght,
+         tdop.product_photos_qty,
+         tdop.product_weight_g,
+         tdop.product_length_cm,
+         tdop.product_height_cm,
+         tdop.product_width_cm
+  FROM   tb_dim_olist_geolocation og
+         LEFT JOIN tb_dim_olist_sellers tdos
+                ON tdos.seller_zip_code_prefix = og.geolocation_zip_code_prefix
+         LEFT JOIN tb_dim_olist_order_items tdooi
+                ON tdooi.seller_id = tdos.seller_id
+         LEFT JOIN tb_dim_olist_products tdop
+                ON tdop.product_id = tdooi.product_id
