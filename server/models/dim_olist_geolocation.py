@@ -27,6 +27,10 @@ class DimOlistGeolocation(Base):
     updated_by = Column(String)
 
     def to_dict(self):
+        """
+        Código responsavel por retornar o objeto ORM em formato de dicionario. Pode ser utilizado para propagar a
+        mensagem para algum outro canal ou broadcast
+        """
         return {
             "id": str(self.id),
             "geolocation_zip_code_prefix": str(self.geolocation_zip_code_prefix),
